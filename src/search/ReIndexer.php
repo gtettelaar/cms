@@ -95,6 +95,7 @@ class ReIndexer
     public function run()
     {
         $transaction = Craft::$app->getDb()->beginTransaction();
+
         try {
             $this->printMessage('Dropping search index');
 
@@ -116,10 +117,10 @@ class ReIndexer
                 $type = $elementTypeData['type'];
                 $this->printMessage("Reindexing elements belonging to $type");
 
-                $siteIds = $this->getTypeSiteIds($type);
+                $siteIds = $this->getElementSiteIds($type);
 
                 foreach ($siteIds as $siteId) {
-                    $this->printMessage('Re indexing on site: ' . $siteId . '');
+                    $this->printMessage("Re indexing on site: $siteId");
 
                     /* @var ElementQueryInterface $query */
                     $query = $type::find()
@@ -128,12 +129,16 @@ class ReIndexer
                         ->trashed(false);
 
                     foreach ($query->all() as $element) {
+                        $name = $element::hasTitles() ? $element->title : $element->id;
+                        $this->printMessage("Indexing element $name");
+
                         if (!\Craft::$app->getSearch()->indexElement($element, $siteId)) {
                             throw new InvalidArgumentException('Unable to index element');
                         }
                     }
-
                 }
+
+                $this->printMessage("Completed indexing elements of type: $type");
             }
 
             $transaction->commit();
