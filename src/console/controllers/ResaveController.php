@@ -19,6 +19,7 @@ use craft\elements\Entry;
 use craft\elements\Tag;
 use craft\elements\User;
 use craft\events\BatchElementActionEvent;
+use craft\search\ReIndexer;
 use craft\services\Elements;
 use yii\console\ExitCode;
 use yii\helpers\Console;
@@ -120,6 +121,23 @@ class ResaveController extends Controller
         }
 
         return $options;
+    }
+
+    /**
+     * @return int
+     */
+    public function actionReIndexSearch()
+    {
+        $this->stdout('Re indexing the search data'.PHP_EOL.PHP_EOL);
+
+        try {
+            ReIndexer::reIndexAllElements(null, $this);
+        } catch (\Throwable $exception) {
+            $this->stderr('Problem with re-indexing elements: '.$exception->getMessage().'');
+            return ExitCode::UNSPECIFIED_ERROR;
+        }
+
+        return ExitCode::OK;
     }
 
     /**

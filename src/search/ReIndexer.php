@@ -107,7 +107,7 @@ class ReIndexer
 
                 $siteIds = $this->getElementSiteIds($type);
 
-                // TODO: Pass $siteIds directly. 
+                // TODO: Pass $siteIds directly.
                 foreach ($siteIds as $siteId) {
                     $this->printMessage("Re indexing on site: $siteId");
 
@@ -147,7 +147,7 @@ class ReIndexer
     public function printMessage(string $message)
     {
         if ($this->consoleController) {
-            $this->consoleController->stdout($message);
+            $this->consoleController->stdout($message.PHP_EOL);
         }
     }
 
