@@ -77,6 +77,7 @@ class ReIndexer
     }
 
     /**
+     * TODO: Test using: https://github.com/sjelfull/craft3-faker
      * @return bool
      * @throws \Throwable
      */
@@ -107,7 +108,6 @@ class ReIndexer
 
                 $siteIds = $this->getElementSiteIds($type);
 
-                // TODO: Pass $siteIds directly.
                 foreach ($siteIds as $siteId) {
                     $this->printMessage("Re indexing on site: $siteId");
 
