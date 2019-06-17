@@ -98,6 +98,38 @@ class Search extends Component
     }
 
     /**
+     * Indexes all of an elements data to the Search index table.
+     *
+     * @param ElementInterface $element
+     * @param int $siteId
+     * @return bool
+     * @throws \craft\errors\SiteNotFoundException
+     */
+    public function indexElement(ElementInterface $element, int $siteId)
+    {
+        /** @var Element $element */
+        $this->indexElementAttributes($element);
+
+        if ($element::hasContent() && ($fieldLayout = $element->getFieldLayout()) !== null) {
+            $keywords = [];
+
+            foreach ($fieldLayout->getFields() as $field) {
+                /** @var Field $field */
+                if ($field->searchable) {
+                    // Set the keywords for the content's site
+                    $fieldValue = $element->getFieldValue($field->handle);
+                    $fieldSearchKeywords = $field->getSearchKeywords($fieldValue, $element);
+                    $keywords[$field->id] = $fieldSearchKeywords;
+                }
+            }
+
+            $this->indexElementFields($element->id, $siteId, $keywords);
+        }
+
+        return true;
+    }
+
+    /**
      * Indexes the attributes of a given element defined by its element type.
      *
      * @param ElementInterface $element
@@ -265,6 +297,11 @@ class Search extends Component
         }
 
         return $elementIds;
+    }
+
+    public function in()
+    {
+
     }
 
     // Private Methods
