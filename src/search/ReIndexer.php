@@ -108,7 +108,6 @@ class ReIndexer
                 ->where([
                     'dateDeleted' => null,
                 ])
-                ->orderBy(['type' => SORT_ASC, 'id' => SORT_ASC])
                 ->distinct(true)
                 ->all();
 
