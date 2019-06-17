@@ -21,6 +21,8 @@ use Craft;
  * Reindexer class
  *
  * @author Pixel & Tonic, Inc. <support@pixelandtonic.com>
+ * @author Global Network Group | Giel Tettelaar <giel@yellowflash.net>
+ * @author Daniel Jagszent <daniel@jagszent.de>
  * @since 3.2
  */
 class ReIndexer
