@@ -10,6 +10,7 @@ namespace craft\search;
 use craft\console\Controller;
 use craft\db\Query;
 use craft\db\Table;
+use craft\elements\db\ElementQuery;
 use craft\elements\db\ElementQueryInterface;
 use craft\helpers\Console;
 use craft\queue\Queue;
@@ -106,10 +107,11 @@ class ReIndexer
 
                 $siteIds = $this->getElementSiteIds($type);
 
+                // TODO: Pass $siteIds directly. 
                 foreach ($siteIds as $siteId) {
                     $this->printMessage("Re indexing on site: $siteId");
 
-                    /* @var ElementQueryInterface $query */
+                    /* @var ElementQuery $query */
                     $query = $type::find()
                         ->siteId($siteId)
                         ->anyStatus()
