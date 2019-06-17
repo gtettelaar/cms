@@ -299,11 +299,6 @@ class Search extends Component
         return $elementIds;
     }
 
-    public function in()
-    {
-
-    }
-
     // Private Methods
     // =========================================================================
 

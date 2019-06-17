@@ -7,11 +7,9 @@
 
 namespace craft\search;
 
-use craft\base\ElementInterface;
 use craft\console\Controller;
 use craft\db\Query;
 use craft\db\Table;
-use craft\elements\db\ElementQuery;
 use craft\elements\db\ElementQueryInterface;
 use craft\helpers\Console;
 use craft\queue\Queue;
@@ -19,7 +17,7 @@ use yii\base\InvalidArgumentException;
 use Craft;
 
 /**
- * Search Query class.
+ * Reindexer class
  *
  * @author Pixel & Tonic, Inc. <support@pixelandtonic.com>
  * @since 3.2
