@@ -114,7 +114,7 @@ class ReIndexer
 
             foreach ($elementTypes as $elementTypeData) {
                 $type = $elementTypeData['type'];
-                $this->printMessage("Reindexing elements belonging to $elementTypeData");
+                $this->printMessage("Reindexing elements belonging to $type");
 
                 $siteIds = $this->getTypeSiteIds($type);
 
