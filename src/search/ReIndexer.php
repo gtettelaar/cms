@@ -47,11 +47,6 @@ class ReIndexer
      */
     protected $completed;
 
-    /**
-     * @var
-     */
-    protected $typeSiteMapping;
-
     // Public Methods
     // =========================================================================
 
@@ -161,19 +156,13 @@ class ReIndexer
      */
     public function getElementSiteIds(string $type) : string
     {
-        if (isset($this->typeSiteMapping[$type])) {
-            return $this->typeSiteMapping[$type];
-        }
-
         if ($type::isLocalizable()) {
             $siteIds = Craft::$app->getSites()->getAllSiteIds();
         } else {
             $siteIds = [Craft::$app->getSites()->getPrimarySite()->id];
         }
 
-        $this->typeSiteMapping[$type] = $siteIds;
-
-        return $this->typeSiteMapping[$type];
+        return $siteIds;
     }
 
     /**
