@@ -28,11 +28,6 @@ class ReIndexer
     // =========================================================================
 
     /**
-     * @var
-     */
-    protected $elements;
-
-    /**
      * @var Queue $queue
      */
     protected $queue;
@@ -63,13 +58,11 @@ class ReIndexer
     /**
      * SearchQuery constructor.
      *
-     * @param array $elements
      * @param Queue|null $queue
      * @param Controller|null $consoleController
      */
-    public function __construct(array $elements, Queue $queue = null, Controller $consoleController = null)
+    public function __construct(Queue $queue = null, Controller $consoleController = null)
     {
-        $this->elements = $elements;
         $this->queue = $queue;
         $this->consoleController = $consoleController;
     }
@@ -77,15 +70,14 @@ class ReIndexer
     /**
      * Self invoker factory
      *
-     * @param array $elements
      * @param Queue|null $queue
      * @param Controller|null $consoleController
      * @return bool
      * @throws \Throwable
      */
-    public static function reIndexAllElements(array $elements, Queue $queue = null, Controller $consoleController = null)
+    public static function reIndexAllElements(Queue $queue = null, Controller $consoleController = null)
     {
-        return (new self($elements, $queue, $consoleController))->run();
+        return (new self($queue, $consoleController))->run();
     }
 
     /**
