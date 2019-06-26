@@ -65,4 +65,14 @@ abstract class TwoFactorManager
      * @return bool
      */
     abstract public function authenticate(string $code) : bool;
+
+    /**
+     * Returns the setup html required for a user to setup their Two factor authentication
+     *
+     * @return string
+     */
+    public function getSetupHtml() : string
+    {
+        return '';
+    }
 }
