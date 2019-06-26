@@ -283,6 +283,10 @@ class GeneralConfig extends BaseObject
      */
     public $enableCsrfCookie = true;
     /**
+     * @var bool
+     */
+    public $force2fa = false;
+    /**
      * @var mixed The amount of time a user’s elevated session will last, which is required for some sensitive actions (e.g. user group/permission assignment).
      *
      * Set to `0` to disable elevated session support.

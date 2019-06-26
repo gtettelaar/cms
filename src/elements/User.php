@@ -535,6 +535,11 @@ class User extends Element implements IdentityInterface
     public $inheritorOnDelete;
 
     /**
+     * @var string|null The class that is an instance of
+     */
+    public $twoFactorClass;
+
+    /**
      * @var Asset|false|null user photo
      */
     private $_photo;
