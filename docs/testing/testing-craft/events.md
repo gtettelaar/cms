@@ -13,8 +13,6 @@ Firstly you need to ensure that your test class has a `$tester` property.
 Once this class property is declared you can call the following method: 
 
 ```php
-use Craft;
-
 $this->tester->expectEvent(MyComponent::class, MyComponent::AN_EVENT, function() {
     MyModule::getInstance()->myComponent->myMethod();
 });
