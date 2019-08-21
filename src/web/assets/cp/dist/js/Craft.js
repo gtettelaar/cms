@@ -8459,7 +8459,7 @@ Craft.AssetIndex = Craft.BaseElementIndex.extend(
 
         /**
          * Update the elements after an upload, setting sort to dateModified descending, if not using index.
-         * 
+         *
          * @private
          */
         _updateAfterUpload: function () {
@@ -12486,6 +12486,19 @@ Craft.CustomizeSourcesModal.BaseSource = Garnish.Base.extend(
                 this.$settingsContainer = $('<div/>')
                     .append(this.createSettings())
                     .appendTo(this.modal.$sourceSettingsContainer);
+
+                var limit = this.sourceData.limit ? this.modal.selectedSource.limit  : 50;
+                this.$settingsContainer
+                    .append(
+                        Craft.ui.createField(
+                            $(
+                                '<input type="number" name="sources[' + this.sourceData.key + '][limit]" class="text" value="'+limit+'">'
+                            ), {
+                            label: Craft.t('app', 'Source limit'),
+                            instructions: Craft.t('app', 'The amount of elements that should be loaded per page for this source.')
+                        })
+                    ).appendTo(this.$settingsContainer)
+
             }
             else {
                 this.$settingsContainer.removeClass('hidden');

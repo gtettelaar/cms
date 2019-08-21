@@ -71,7 +71,7 @@ class CpAsset extends AssetBundle
             'css/charts.css',
         ];
 
-        $this->js[] = 'js/Craft' . $this->dotJs();
+        $this->js[] = 'js/Craft.js';
 
         parent::init();
     }
