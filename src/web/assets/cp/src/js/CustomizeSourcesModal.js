@@ -197,6 +197,16 @@ Craft.CustomizeSourcesModal = Garnish.Modal.extend(
                         }
                     }
 
+                    // Update batch sizes on the element indexes
+                    for (var i = 0; i < this.sources.length; i++) {
+                        var source = this.sources[i]
+
+                        // Got enough to process?
+                        if (source.sourceData.key && source.sourceData.batchSize) {
+                            // Update?
+                        }
+                    }
+
                     // If a source is selected, have the element index select that one by default on the next request
                     if (this.selectedSource && this.selectedSource.sourceData.key) {
                         this.elementIndex.selectSourceByKey(this.selectedSource.sourceData.key);
@@ -240,7 +250,6 @@ Craft.CustomizeSourcesModal.BaseSource = Garnish.Base.extend(
         $itemLabel: null,
         $itemInput: null,
         $settingsContainer: null,
-
         sourceData: null,
 
         init: function(modal, $item, $itemLabel, $itemInput, sourceData) {
@@ -279,18 +288,6 @@ Craft.CustomizeSourcesModal.BaseSource = Garnish.Base.extend(
                 this.$settingsContainer = $('<div/>')
                     .append(this.createSettings())
                     .appendTo(this.modal.$sourceSettingsContainer);
-
-                var limit = this.sourceData.batchSize ? this.sourceData.batchSize : Craft.elementDisplayBatchSize;
-                this.$settingsContainer
-                    .append(
-                        Craft.ui.createField(
-                            $(
-                                '<input type="number" name="sources[' + this.sourceData.key + '][batchSize]" class="text" value="'+limit+'">'
-                            ), {
-                                label: Craft.t('app', 'Element display batch size'),
-                                instructions: Craft.t('app', 'The amount of elements that should be loaded per paginated page for this source.')
-                            })
-                    ).appendTo(this.$settingsContainer)
             }
             else {
                 this.$settingsContainer.removeClass('hidden');
@@ -298,6 +295,17 @@ Craft.CustomizeSourcesModal.BaseSource = Garnish.Base.extend(
 
             this.modal.$sourceSettingsContainer.scrollTop(0);
         },
+
+        createBatchSizeField: function() {
+            var value = this.sourceData.batchSize ? this.sourceData.batchSize : Craft.elementDisplayBatchSize;
+
+            return Craft.ui.createField(
+                $('<input type="number" data-source-key="'+this.sourceData.key+'" name="sources[' + this.sourceData.key + '][batchSize]" class="text" value="'+value+'">'), {
+                    label: Craft.t('app', 'Element display batch size'),
+                    instructions: Craft.t('app', 'The amount of elements that should be loaded per paginated page for this source.')
+                })
+        },
+
 
         createSettings: function() {
         },
@@ -365,10 +373,14 @@ Craft.CustomizeSourcesModal.Source = Craft.CustomizeSourcesModal.BaseSource.exte
                     axis: 'y'
                 });
 
-                return Craft.ui.createField($([$titleColumnCheckbox[0], $columnCheckboxes[0]]), {
-                    label: Craft.t('app', 'Table Columns'),
-                    instructions: Craft.t('app', 'Choose which table columns should be visible for this source, and in which order.')
-                });
+                return $([
+                    Craft.ui.createField($([$titleColumnCheckbox[0], $columnCheckboxes[0]]), {
+                        label: Craft.t('app', 'Table Columns'),
+                        instructions: Craft.t('app', 'Choose which table columns should be visible for this source, and in which order.')
+                    })[0],
+
+                    this.createBatchSizeField()[0]
+                ]);
             }
         },
 
