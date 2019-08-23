@@ -8,6 +8,7 @@
             {% set key = source.keyPath ?? (keyPrefix ~ source.key) %}
             <li>{% spaceless %}
                 <a data-key="{{ key }}"
+                   data-batch-size="{{ source.batchSize ?? craft.config.general.elementDisplayBatchSize }}"
                     {%- if source.hasThumbs is defined and source.hasThumbs %} data-has-thumbs{% endif %}
                     {%- if source.structureId is defined %} data-has-structure{% endif %}
                     {%- if source.defaultSort is defined %}{% set defaultSort = source.defaultSort %} data-default-sort="{{ defaultSort is iterable ? defaultSort|join(':') : defaultSort }}"{% endif %}

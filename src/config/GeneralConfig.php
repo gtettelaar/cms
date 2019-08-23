@@ -291,6 +291,12 @@ class GeneralConfig extends BaseObject
      */
     public $elevatedSessionDuration = 300;
     /**
+     * @var int The default limit of elements that should be displayed in the Element index
+     *
+     * Can also be configured on a source-by-source basis.
+     */
+    public $elementDisplayBatchSize = 50;
+    /**
      * @var bool Whether to enable CSRF protection via hidden form inputs for all forms submitted via Craft.
      * @see csrfTokenName
      * @see enableCsrfCookie

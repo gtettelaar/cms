@@ -52,6 +52,7 @@ class ElementIndexSettingsController extends BaseElementsController
                 ];
             }
         }
+
         unset($source);
 
         // Get the available table attributes

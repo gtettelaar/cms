@@ -71,7 +71,7 @@ class ElementIndexes extends Component
         /** @var string|ElementInterface $elementType */
         // Get the currently saved settings
         $settings = $this->getSettings($elementType);
-        $baseSources = $this->_normalizeSources($elementType::sources('index'));
+        $baseSources = $this->_normalizeSources($elementType::sources('index'), $settings);
 
         // Updating the source order?
         if (isset($newSettings['sourceOrder'])) {
@@ -152,7 +152,7 @@ class ElementIndexes extends Component
     {
         /** @var string|ElementInterface $elementType */
         $settings = $this->getSettings($elementType);
-        $baseSources = $this->_normalizeSources($elementType::sources($context));
+        $baseSources = $this->_normalizeSources($elementType::sources($context), $settings);
         $sources = [];
 
         // Should we output the sources in a custom order?
@@ -301,9 +301,10 @@ class ElementIndexes extends Component
      * Normalizes an element type’s source list.
      *
      * @param array $sources
+     * @param array$settings
      * @return array
      */
-    private function _normalizeSources(array $sources): array
+    private function _normalizeSources(array $sources, array $settings): array
     {
         if (!is_array($sources)) {
             return [];
@@ -311,6 +312,9 @@ class ElementIndexes extends Component
 
         $normalizedSources = [];
         $pendingHeading = null;
+
+        $sourcesSettings = $settings['sources'] ?? [];
+        $defaultBatchSize = Craft::$app->getConfig()->getGeneral()->elementDisplayBatchSize;
 
         foreach ($sources as $source) {
             // Is this a heading?
@@ -326,6 +330,10 @@ class ElementIndexes extends Component
                 // Only allow sources that have a key
                 if (empty($source['key'])) {
                     continue;
+                }
+
+                if (!isset($source['batchSize'])) {
+                    $source['batchSize'] = $sourcesSettings[$source['key']]['batchSize'] ?? $defaultBatchSize;
                 }
 
                 $normalizedSources[] = $source;

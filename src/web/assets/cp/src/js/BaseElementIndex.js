@@ -882,6 +882,11 @@ Craft.BaseElementIndex = Garnish.Base.extend(
 
             Craft.cp.updateSidebarMenuLabel();
 
+            // Set the batch size
+            this.settings.batchSize = Garnish.hasAttr(this.$source, 'data-batch-size')
+                ? this.$source.data('batch-size')
+                : Craft.elementDisplayBatchSize;
+
             if (this.searching) {
                 // Clear the search value without causing it to update elements
                 this.searchText = null;
@@ -1842,7 +1847,7 @@ Craft.BaseElementIndex = Garnish.Base.extend(
             modal: null,
             storageKey: null,
             criteria: null,
-            batchSize: 50,
+            batchSize: Craft.elementDisplayBatchSize,
             disabledElementIds: [],
             selectable: false,
             multiSelect: false,

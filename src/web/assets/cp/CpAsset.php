@@ -260,6 +260,7 @@ JS;
             'defaultIndexCriteria' => ['enabledForSite' => null],
             'editableCategoryGroups' => $upToDate ? $this->_editableCategoryGroups() : [],
             'edition' => Craft::$app->getEdition(),
+            'elementDisplayBatchSize' => $generalConfig->elementDisplayBatchSize,
             'fileKinds' => Assets::getFileKinds(),
             'isImagick' => Craft::$app->getImages()->getIsImagick(),
             'isMultiSite' => Craft::$app->getIsMultiSite(),

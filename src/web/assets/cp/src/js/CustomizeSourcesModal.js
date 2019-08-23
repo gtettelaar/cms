@@ -279,6 +279,18 @@ Craft.CustomizeSourcesModal.BaseSource = Garnish.Base.extend(
                 this.$settingsContainer = $('<div/>')
                     .append(this.createSettings())
                     .appendTo(this.modal.$sourceSettingsContainer);
+
+                var limit = this.sourceData.batchSize ? this.sourceData.batchSize : Craft.elementDisplayBatchSize;
+                this.$settingsContainer
+                    .append(
+                        Craft.ui.createField(
+                            $(
+                                '<input type="number" name="sources[' + this.sourceData.key + '][batchSize]" class="text" value="'+limit+'">'
+                            ), {
+                                label: Craft.t('app', 'Element display batch size'),
+                                instructions: Craft.t('app', 'The amount of elements that should be loaded per paginated page for this source.')
+                            })
+                    ).appendTo(this.$settingsContainer)
             }
             else {
                 this.$settingsContainer.removeClass('hidden');
