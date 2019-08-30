@@ -23,6 +23,7 @@ use craft\elements\Tag;
 use craft\elements\User;
 use craft\events\BatchElementActionEvent;
 use craft\fields\Matrix;
+use craft\helpers\ElementHelper;
 use craft\services\Elements;
 use yii\console\ExitCode;
 use yii\helpers\Console;
@@ -286,6 +287,11 @@ class ResaveController extends Controller
             if ($e->query === $query) {
                 /** @var Element $element */
                 $element = $e->element;
+
+                // Get rid of revisions?
+                if (!ElementHelper::isDraftOrRevision($element)) {
+                    Craft::$app->getRevisions()->pruneExcessRevisions($element);
+                }
                 $this->stdout("    - Resaving {$element} ({$element->id}) ... ");
             }
         };
