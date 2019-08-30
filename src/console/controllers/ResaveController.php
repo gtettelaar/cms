@@ -287,11 +287,6 @@ class ResaveController extends Controller
             if ($e->query === $query) {
                 /** @var Element $element */
                 $element = $e->element;
-
-                // Get rid of revisions?
-                if (!ElementHelper::isDraftOrRevision($element)) {
-                    Craft::$app->getRevisions()->pruneExcessRevisions($element);
-                }
                 $this->stdout("    - Resaving {$element} ({$element->id}) ... ");
             }
         };
@@ -307,6 +302,11 @@ class ResaveController extends Controller
                     $this->stderr('failed: ' . implode(', ', $element->getErrorSummary(true)) . PHP_EOL, Console::FG_RED);
                     $fail = true;
                 } else {
+                    // Get rid of revisions?
+                    if (!ElementHelper::isDraftOrRevision($element)) {
+                        Craft::$app->getRevisions()->pruneExcessRevisions($element);
+                    }
+
                     $this->stdout('done' . PHP_EOL, Console::FG_GREEN);
                 }
             }
